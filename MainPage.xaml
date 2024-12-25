@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HOHK.MainPage">
+
+    <Grid x:Name="MainGrid" IsVisible ="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <!-- Scrollable content -->
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+
+        </Grid.RowDefinitions>
+
+        <!-- Custom Top Bar -->
+        <Grid Grid.Row="0" BackgroundColor="LightGray" Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <!-- Left content -->
+                <ColumnDefinition Width="*" />
+                <!-- Center content -->
+                <ColumnDefinition Width="Auto" />
+                <!-- Right content -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Toolbar -->
+            <Button Text="Ny patient" x:Name="NewPatientButton" Clicked="NewPatientButton_clicked"  Grid.Column="0" IsEnabled="True" />
+
+            <!-- Center Title -->
+            <Label Text="HOHK" 
+                   HorizontalOptions="Center" 
+                   VerticalOptions="Center"
+                   Grid.Column="1"
+                   FontSize="Title"/>
+
+            <!-- Right Toolbar -->
+            <Button x:Name="DeletepictureButton" Text="Slet billede(r)" Clicked="DeletePictureButton_Clicked" Grid.Column="2" />
+        </Grid>
+        <!-- Scrollable CollectionView -->
+        <ScrollView Grid.Row="1" x:Name="PhotosCollectionScrollView" IsVisible="False">
+            <VerticalStackLayout Padding="30,0" Spacing="25">
+                <CollectionView x:Name="PhotosCollectionView"
+                                ItemsLayout="VerticalList">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <!-- Horizontal layout for image and checkbox -->
+                            <HorizontalStackLayout Spacing="10" Padding="5">
+                                <CheckBox IsChecked="{Binding IsSelected}" />
+                                <Image Source="{Binding PhotoPath}" 
+                                       Aspect="AspectFit"
+                                        HorizontalOptions="Center"
+                                        VerticalOptions="Center"
+                                        WidthRequest="200"
+                                        HeightRequest="200" />
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Buttons fixed at the bottom -->
+        <Button Grid.Row="2"
+                x:Name="OnTakePictureButton"
+                Text="Nyt billede"
+                Clicked="OnTakePictureButtonClicked"
+                Padding="10"
+                HorizontalOptions="FillAndExpand"
+                VerticalOptions="End"/>
+
+        <VerticalStackLayout Grid.Row="3"
+            Padding="10"
+            Spacing="10"
+            IsVisible="False"
+            x:Name="NumberInputSection">
+                    <Label Text="Tast CPR:"
+            FontSize="Medium" />
+                    <Entry x:Name="NumberEntry"
+            Placeholder="CPR"
+            Keyboard="Numeric" />
+                    <Button Text="Gem CPR"
+            Clicked="OnValidateNumberClicked" />
+                        <Label x:Name="ErrorLabel"
+            TextColor="Red"
+            IsVisible="False" />    
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>
